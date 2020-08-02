@@ -1,5 +1,5 @@
 import numpy as np
-from connect-four import Board, Player
+from connectfour import Board, Player
 
 game_over = False
 

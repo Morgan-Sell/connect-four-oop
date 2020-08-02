@@ -7,8 +7,8 @@
 
 from setuptools import setup
 
-setup(name = 'connectfour',
+setup(name = 'connect-four',
       version = '0.1',
       description = 'Connect Four',
-      packages = ['connectfour'],
+      packages = ['connect-four'],
       zip_safe = False)
