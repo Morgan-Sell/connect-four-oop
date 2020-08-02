@@ -1,5 +1,5 @@
 import numpy as np
-from connect-four import game
+from connect-four import Board, Player
 
 game_over = False
 
@@ -10,10 +10,8 @@ no_token = 0
 p1_token = 1
 p2_token = 2
 
-
 player1 = Player(p1_name, p1_token)
 player2 = Player(p2_name, p2_token)
-
 board = Board()
 
 
