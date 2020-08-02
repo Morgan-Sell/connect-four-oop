@@ -4,3 +4,11 @@
 
 # HINT: Here is an example of a setup.py file
 # https://packaging.python.org/tutorials/packaging-projects/
+
+from setuptools import setup
+
+setup(name = 'connect-four',
+      version = '0.1',
+      description = 'Connect Four',
+      packages = ['connect-four'],
+      zip_safe = False)
