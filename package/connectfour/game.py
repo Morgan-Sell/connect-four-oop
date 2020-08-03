@@ -10,21 +10,38 @@ DIRECTIONS = (
 )
 
 token_color_map = {
-    p1_token : 'black'
-    p2_token : 'red'
-    no_token : 'white'
+    0 : 'white',
+    1 : 'black',
+    2 : 'red',
 }
 
 
 
-class Board(self):
+class Board():
     '''
     Class represent the Connect 4 board. It starts empty.
     '''
     
     def __init__(self):
         
-        self.board = np.zeros((board_width, board_height))
+        self.board = np.zeros((board_height, board_width))
+    
+    def check_rows(self, token):
+        '''
+        Determine if there are four tokens in a row on the rows
+        
+        Args:
+            None
+        Return:
+            game_won (boolean): True if player has four in a row.
+        '''
+        for r in range(game_height - 1, -1, -1):
+            tracker = []
+            for c in range(game_width):
+                if self.board[r][c] == token:
+                    tracker.append(True)
+                    
+                if len(tracker) == 4 and all(tracker):
    
     def check_for_winner(self, token):
         '''
@@ -66,8 +83,8 @@ class Board(self):
         '''
         
         
-        for r in range(board_height, -1, -1):
-            if self.board[r][col] == 0
+        for r in range(board_height-1, -1, -1):
+            if self.board[r][col] == 0:
                 row_idx = r
                 break
         
@@ -86,7 +103,7 @@ class Board(self):
         '''
         self.board[row][col] = token
         
-class Player(self):
+class Player():
     # One of two players who can play Connect 4.
     
     def __init__(self, name, token):
