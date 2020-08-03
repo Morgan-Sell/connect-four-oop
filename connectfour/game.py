@@ -10,8 +10,6 @@ token_color_map = {
     2 : 'red',
 }
 
-
-
 class Board():
     '''
     Class represent the Connect 4 board. It starts empty.
@@ -85,26 +83,21 @@ class Board():
             tracker = []
             for c in range(board_width):
                 try:
-                    arr_str = str(self.board[r][c]) + str(self.board[r-1][c+1]) + str(self.board[r-2][c+2]) + str(self.board[r-3][c+3])
+                    if self.board[r][c] == token and self.board[r-1][c+1] == token and self.board[r-2][c+2] == token and self.board[r-3][c+3] == token:
+                        has_won = True
+                        return has_won
                 except IndexError:
                     next
-                
-                if arr_str == str(token) * 4:
-                    has_won = True
-                    return has_won
-        
+                      
         # Check backwards        
         for r in range(board_height - 1, -1, -1):
             for c in range(board_width - 1, -1, -1):
                 try:
-                    arr_str = str(self.board[r][c]) + str(self.board[r-1][c+1]) + str(self.board[r-2][c+2]) + str(self.board[r-3][c+3])
+                    if self.board[r][c] == token and self.board[r-1][c-1] == token and self.board[r-2][c-2] == token and self.board[r-3][c-3] == token:
+                        has_won = True
+                        return has_won
                 except IndexError:
                     next
-                
-                if arr_str == str(token) * 4:
-                    has_won = True
-                    return has_won
-        
         return has_won
     
     def check_for_winner(self, token, name):
@@ -164,6 +157,7 @@ class Board():
                 row_idx = r
                 break
         
+        self.num_tokens_in_play += 1
         return row_idx
     
     def update_board(self, row, col, token):
