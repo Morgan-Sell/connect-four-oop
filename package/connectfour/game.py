@@ -3,11 +3,6 @@ import numpy as np
 board_width = 7
 board_height = 6
 
-DIRECTIONS = (
-    (-1, -1), (-1, 0), (-1, 1),
-    ( 0, -1),          ( 0, 1),
-    ( 1, -1), ( 1, 0), ( 1, 1),
-)
 
 token_color_map = {
     0 : 'white',
@@ -73,8 +68,45 @@ class Board():
         
         return has_won 
         
-   
-   
+    def check_diagnol(self, token):
+        '''
+        Determine if there are four tokens in a row in a row.
+        
+        Args:
+            None
+        Return:
+            has_won (boolean): True if player has four in a row.
+       '''
+
+        has_won = False
+        
+        # Check forwards
+        for r in range(board_height - 1, -1, -1):
+            tracker = []
+            for c in range(board_width):
+                try:
+                    arr_str = str(self.board[r][c]) + str(self.board[r-1][c+1]) + str(self.board[r-2][c+2]) + str(self.board[r-3][c+3])
+                except IndexError:
+                    next
+                
+                if arr_str == str(token) * 4:
+                    has_won = True
+                    return has_won
+        
+        # Check backwards        
+        for r in range(board_height - 1, -1, -1):
+            for c in range(board_width - 1, -1, -1):
+                try:
+                    arr_str = str(self.board[r][c]) + str(self.board[r-1][c+1]) + str(self.board[r-2][c+2]) + str(self.board[r-3][c+3])
+                except IndexError:
+                    next
+                
+                if arr_str == str(token) * 4:
+                    has_won = True
+                    return has_won
+        
+        return has_won
+    
     def check_for_winner(self, token, name):
         '''
         Reviews board to see if a player has four in a row.
@@ -90,9 +122,9 @@ class Board():
         is_winner = False
         connect_4_by_row = self.check_rows(token)
         connect_4_by_column = self.check_columns(token)
-        # add check_diagnol
+        connect_4_by_diagnol = self.check_diagnol(token)
         
-        if connect_4_by_row or connect_4_by_column:
+        if connect_4_by_row or connect_4_by_column or connect_4_by_diagnol:
             print ('Congratulations {}! You won! Yay!'.format(name))
             is_winner = True
         
@@ -151,25 +183,12 @@ class Player():
     # One of two players who can play Connect 4.
     
     def __init__(self, name, token):
-        
         self.name = name
         self.token = token
-        self.pos_of_tokens = []
+  
     
     
-        
-    def add_token_pos(self, loc):
-        '''
-        Adds token to a list of the locations of the player's tokens on the board.
-        
-        Args:
-            loc (tuple) : location (row, column) of a token added by a player.
-            
-        Return:
-            None
-        '''
-        
-        self.pos_of_tokens.append(loc)
+  
         
         
         
