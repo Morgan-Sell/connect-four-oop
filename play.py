@@ -21,13 +21,13 @@ board = Board()
 while game_over == False:
     
     # PLAYER ONE'S TURN
-    p1_col = int(input(f'{p1_name}, select column 0 to {board_width-1} to drop a token: ' ))
+    p1_col = int(input(f'{p1_name}, select a column to drop a token. Options are 0 to {board_width-1}. ' ' ))
     available_space = board.is_valid_loc(p1_col)
     
     # Ask to select another column if space is not available.
     while available_space == False:
-        print('No available space. Select another column')
-        p1_col = int(input(f'{p1_name}, select column 0 to {board_width-1} to drop a token: ' ))
+        print('Ooops! The column that you selected is full.')
+        p1_col = int(input(f'Select a different column. Options are 0 to {board_width-1}.' ))
         available_space = board.is_valid_loc(p1_col)
     
     avail_row = board.find_first_available_row(p1_col)
@@ -40,13 +40,13 @@ while game_over == False:
         break
     
     # PLAYER TWO'S TURN
-    p2_col = int(input(f'{p2_name}, select column 0 to {board_width-1} to drop a token: ' ))
+    p2_col = int(input(f'{p2_name}, select a column to drop a token. Options are 0 to {board_width-1}. ' ))
     available_space = board.is_valid_loc(p2_col)
     
     # Ask to select another column if space is not available.
     while available_space == False:
-        print('No available space. Select another column')
-        p2_col = int(input(f'{p2_name}, select column 0 to {board_width-1} to drop a token: ' ))
+        print('Ooops! The column that you selected is full.')
+        p2_col = int(input(f'Select a different column. Options are 0 to {board_width-1}.' ))
         available_space = board.is_valid_loc(p2_col)
     
     avail_row = board.find_first_available_row(p2_col)
