@@ -34,7 +34,8 @@ while game_over == False:
     player1.add_token_pos((avail_row, p1_col))
     
     print(board.board)
-    # check if player 1 won
+    # Check if Player 1 won
+    board.check_for_winner(player1.token, player1.name)
     
     # PLAYER TWO'S TURN
     p2_col = int(input(f'{p2_name}, select a column 0 to 5 to drop a token: ' ))
@@ -52,3 +53,5 @@ while game_over == False:
     player2.add_token_pos((avail_row, p2_col))
     
     print(board.board)
+    
+    board.check_for_winner(player1.token, player1.name)

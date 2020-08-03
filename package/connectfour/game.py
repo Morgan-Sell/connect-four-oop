@@ -25,35 +25,76 @@ class Board():
     def __init__(self):
         
         self.board = np.zeros((board_height, board_width))
+        self.num_tokens_in_play = 0
     
     def check_rows(self, token):
         '''
         Determine if there are four tokens in a row on the rows
         
         Args:
-            None
+            token (int): 1 or 2. Dependent on the player.
         Return:
             game_won (boolean): True if player has four in a row.
         '''
+        tracker = []
+        game_won = False
         for r in range(game_height - 1, -1, -1):
-            tracker = []
-            for c in range(game_width):
+            for c in range(game_width):        
                 if self.board[r][c] == token:
                     tracker.append(True)
+                else:
+                    tracker = []
                     
                 if len(tracker) == 4 and all(tracker):
+                    game_won = True
+                    return game_won
+        return game_won 
+
+    def check_columns(self, token):
+        '''
+        Determine if there are four tokens in a row in a row.
+        
+        Args:
+            None
+        Return:
+            game_won (boolean): True if player has four in a row.
+       '''
+       for c in range(game_width):        
+            for r in range(game_height - 1, -1, -1):
+                if self.board[r][c] == token:
+                    tracker.append(True)
+                else:
+                    tracker = []
+                    
+                if len(tracker) == 4 and all(tracker):
+                    game_won = True
+                    return game_won
+        return game_won 
+        
    
-    def check_for_winner(self, token):
+   
+    def check_for_winner(self, token, name):
         '''
         Reviews board to see if a player has four in a row.
         
         Arg:
             token (str): Character to look for.
+            name(
         
         Return:
             found_winner (Boolean): Value is True if a player has four in a row.
+            
         '''
-     
+        connect_4_by_row = self.check_rows(token)
+        connect_4_by_column = self.check_columns(token)
+        # add check_diagnol
+        
+        if connect_4_by_row or connect_4_by_column:
+            print ('Congratulations {}! You won! Yay!'.format(name))
+            found_winner = True
+        
+        return True
+            
     
     def is_valid_loc(self, col):
         '''
