@@ -37,18 +37,18 @@ class Board():
             game_won (boolean): True if player has four in a row.
         '''
         tracker = []
-        game_won = False
-        for r in range(game_height - 1, -1, -1):
-            for c in range(game_width):        
+        has_won = False
+        for r in range(board_height - 1, -1, -1):
+            for c in range(board_width):        
                 if self.board[r][c] == token:
                     tracker.append(True)
                 else:
                     tracker = []
                     
                 if len(tracker) == 4 and all(tracker):
-                    game_won = True
-                    return game_won
-        return game_won 
+                    has_won = True
+                    return has_won
+        return has_won 
 
     def check_columns(self, token):
         '''
@@ -57,19 +57,21 @@ class Board():
         Args:
             None
         Return:
-            game_won (boolean): True if player has four in a row.
+            has_won (boolean): True if player has four in a row.
        '''
-       for c in range(game_width):        
-            for r in range(game_height - 1, -1, -1):
+        tracker = []
+        has_won = False
+        for c in range(board_width):
+            for r in range(board_height - 1, -1, -1):
                 if self.board[r][c] == token:
                     tracker.append(True)
                 else:
                     tracker = []
-                    
                 if len(tracker) == 4 and all(tracker):
-                    game_won = True
-                    return game_won
-        return game_won 
+                    has_won = True
+                    return has_won
+        
+        return has_won 
         
    
    
@@ -82,18 +84,19 @@ class Board():
             name(
         
         Return:
-            found_winner (Boolean): Value is True if a player has four in a row.
+            is_winner (Boolean): Value is True if a player has four in a row.
             
         '''
+        is_winner = False
         connect_4_by_row = self.check_rows(token)
         connect_4_by_column = self.check_columns(token)
         # add check_diagnol
         
         if connect_4_by_row or connect_4_by_column:
             print ('Congratulations {}! You won! Yay!'.format(name))
-            found_winner = True
+            is_winner = True
         
-        return True
+        return is_winner
             
     
     def is_valid_loc(self, col):

@@ -35,7 +35,9 @@ while game_over == False:
     
     print(board.board)
     # Check if Player 1 won
-    board.check_for_winner(player1.token, player1.name)
+    game_over = board.check_for_winner(player1.token, player1.name)
+    if game_over:
+        break
     
     # PLAYER TWO'S TURN
     p2_col = int(input(f'{p2_name}, select a column 0 to 5 to drop a token: ' ))
