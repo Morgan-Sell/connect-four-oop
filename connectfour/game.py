@@ -1,4 +1,5 @@
 import numpy as np
+import pygame
 
 board_width = 7
 board_height = 6
@@ -10,15 +11,26 @@ token_color_map = {
     2 : 'red',
 }
 
+# Color codes:
+
+
+
 class Board():
     '''
     Class represent the Connect 4 board. It starts empty.
     '''
     
-    def __init__(self):
+    def __init__(self, column_count, row_count, square_size):
         
-        self.board = np.zeros((board_height, board_width))
-        self.num_tokens_in_play = 0
+        self.column_count = column_count
+        self.row_count = row_count
+        self.square_size = square_size
+        self.board_height = row_count * square_size
+        self.board_width = column_count * square_size
+        self.screen_height = (row_count + 1) * square_size
+        self.screen_dimensions = (self.board_width, self.screen_height) 
+        self.board = np.zeros((row_count, column_count))
+        
     
     def check_rows(self, token):
         '''
@@ -31,8 +43,8 @@ class Board():
         '''
         tracker = []
         has_won = False
-        for r in range(board_height - 1, -1, -1):
-            for c in range(board_width):        
+        for c in range(self.column_count):
+            for r in range(self.row_count - 1, -1, -1):
                 if self.board[r][c] == token:
                     tracker.append(True)
                 else:
@@ -54,8 +66,8 @@ class Board():
        '''
         tracker = []
         has_won = False
-        for c in range(board_width):
-            for r in range(board_height - 1, -1, -1):
+        for c in range(self.column_count):
+            for r in range(self.row_count - 1, -1, -1):
                 if self.board[r][c] == token:
                     tracker.append(True)
                 else:
@@ -79,9 +91,9 @@ class Board():
         has_won = False
         
         # Check forwards
-        for r in range(board_height - 1, -1, -1):
-            tracker = []
-            for c in range(board_width):
+      
+        for c in range(self.column_count):
+            for r in range(self.row_count - 1, -1, -1):
                 try:
                     if self.board[r][c] == token and self.board[r-1][c+1] == token and self.board[r-2][c+2] == token and self.board[r-3][c+3] == token:
                         has_won = True
@@ -90,8 +102,8 @@ class Board():
                     next
                       
         # Check backwards        
-        for r in range(board_height - 1, -1, -1):
-            for c in range(board_width - 1, -1, -1):
+        for c in range(self.column_count):
+            for r in range(self.row_count - 1, -1, -1):
                 try:
                     if self.board[r][c] == token and self.board[r-1][c-1] == token and self.board[r-2][c-2] == token and self.board[r-3][c-3] == token:
                         has_won = True
@@ -150,9 +162,7 @@ class Board():
         Returns:
             row_idx (int): Row # where token will land.
         '''
-        
-        
-        for r in range(board_height-1, -1, -1):
+        for r in range(self.row_count - 1, -1, -1):
             if self.board[r][col] == 0:
                 row_idx = r
                 break
@@ -172,6 +182,24 @@ class Board():
             None
         '''
         self.board[row][col] = token
+        
+        
+    def draw_board(self, rect_color,):
+        '''
+        Draws Connect Four board.
+        
+        Args:
+            None
+        Returns:
+            None
+        '''
+        screen = pygame.display.set_mode(self.screen_dimensions)
+        
+        for c in range(self.column_count):
+            for r in range(self.row_count - 1, -1, -1):
+                pygame.draw.rect(screen, rect_color, (c * self.square_size, r * self.square_size + self.square_size,
+                                                      square_size, square_size))
+        pygame.display.update()
         
 class Player():
     # One of two players who can play Connect 4.
